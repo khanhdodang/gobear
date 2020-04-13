@@ -16,8 +16,7 @@ public class BasePage {
     private RemoteWebDriver driver = null;
 
     /**
-     * setup Chrome Driver on Mac
-     * Note: We can handle Chrome Driver on Windows here
+     * setup Chrome/ Firefox Driver on Mac
      */
     public WebDriver setupDriver(String browser) {
         if (browser.toLowerCase().equals("chrome")) {
