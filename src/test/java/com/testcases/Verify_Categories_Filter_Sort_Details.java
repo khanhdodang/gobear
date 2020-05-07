@@ -6,12 +6,14 @@ import com.objects.CardDetails;
 import com.pages.DetailsPage;
 import com.pages.SearchProductsPage;
 import com.profiles.DefaultProfile;
+import com.utils.FileUtils;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.*;
 import org.testng.Assert;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
