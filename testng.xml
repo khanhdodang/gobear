@@ -12,4 +12,10 @@
             <class name="com.testcases.Verify_Categories_Filter_Sort_Details"/>
         </classes>
     </test>
+    <test name="Read files in Local">
+        <parameter name="browserName" value="firefox" />
+        <classes>
+            <class name="com.testcases.Verify_Download_Files"/>
+        </classes>
+    </test>
 </suite>

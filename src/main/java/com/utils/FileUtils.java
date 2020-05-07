@@ -15,22 +15,7 @@ import java.io.IOException;
 
 public class FileUtils {
 
-    public ArrayList<String> readCSV(String filePath) throws IOException {
-        File csvFile = new File(filePath);
-        ArrayList<String> data = new ArrayList<String>();
-        if (csvFile.isFile()) {
-            Scanner sc = new Scanner(csvFile);
-            sc.useDelimiter(",");   //sets the delimiter pattern
-            while (sc.hasNext()) {
-                data.add(sc.next());
-                System.out.print(sc.next());
-            }
-            sc.close();  //closes the scanner
-        }
-        return data;
-    }
-
-    public List<List<String>> readCSVTest(String filePath) throws IOException {
+    public List<List<String>> readCSV(String filePath) throws IOException {
         InputStream is = FileUtils.class.getResourceAsStream(filePath);
         BufferedReader csvReader = new BufferedReader(new InputStreamReader(is));
         List<List<String>> records = new ArrayList<>();
