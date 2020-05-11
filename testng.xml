@@ -12,7 +12,7 @@
             <class name="com.testcases.Verify_Categories_Filter_Sort_Details"/>
         </classes>
     </test>
-    <test name="Read files in Local">
+    <test name="Read files from Local or URL ">
         <classes>
             <class name="com.testcases.Verify_Download_Files"/>
         </classes>

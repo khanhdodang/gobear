@@ -1,6 +1,5 @@
 {
-  "employees": {
-    "employee": [
+    "employees": [
       {
         "id": "1",
         "firstName": "Tom",
@@ -20,5 +19,4 @@
         "photo": "https://pbs.twimg.com/profile_images/664886718559076352/M00cOLrh.jpg"
       }
     ]
-  }
 }
