@@ -25,7 +25,8 @@ public class Verify_Download_Files {
     @Test(description = "Read JSON file in local.")
     public void TestCase5(){
         System.out.println("------------Read JSON file in local------------");
-        String filePath = "/downloads/employees.json";
+//        String filePath = "/downloads/employees.json";
+        String filePath = "/downloads/downloaded_employees.json";
         JSONObject json = fileUtils.readJSON(filePath);
         List<EmployeeDetails> employeeDetailsList = fileUtils.parseEmployeeDataTest(json);
         for(EmployeeDetails employee : employeeDetailsList){
@@ -38,7 +39,7 @@ public class Verify_Download_Files {
     @Test(description = "Read CSV file in local.")
     public void TestCase6() {
         System.out.println("------------Read CSV file in local------------");
-        List<CarDetails> carDetailsList = fileUtils.readCSVByBuffered();
+        List<CarDetails> carDetailsList = fileUtils.readCSVByScanner();
         for (int i = 1; i < carDetailsList.size(); i++) {
             System.out.println("year.." + carDetailsList.get(i).getCarYear());
             System.out.println("make.." + carDetailsList.get(i).getCarMake());

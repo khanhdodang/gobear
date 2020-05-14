@@ -16,6 +16,19 @@ public class DetailsPageData {
     public static String VTPL_PROPERTY_DAMAGE = "₱200,000";
     public static String ACT_OF_NATURE = "₱455,000";
     public static String WHEN_SOMEONE_IN_YOUR_CAR_GETS_HURT = "₱50,000 per seat, max 5 seats";
+
+
+    public static ArrayList<String> HEADERS() {
+        ArrayList<String> arrayList = new ArrayList<String>();
+        arrayList.add("QBE Seaboard");
+        arrayList.add("MAPFRE Insular");
+        arrayList.add("PNB General Insurers");
+        arrayList.add("PhilsFirst Insurance");
+        arrayList.add("Pacific Union Insurance");
+        arrayList.add("Alpha Insurance");
+        return arrayList;
+    }
+
     public static ArrayList<String> PRICES() {
         ArrayList<String> arrayList = new ArrayList<String>();
         arrayList.add("₱ 12,573 /year");

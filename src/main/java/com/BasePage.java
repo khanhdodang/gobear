@@ -1,7 +1,4 @@
 package com;
-import java.io.File;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import com.profiles.DefaultProfile;
 import org.openqa.selenium.*;
@@ -11,6 +8,10 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.io.File;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class BasePage {
     private RemoteWebDriver driver = null;
