@@ -6,7 +6,6 @@ import com.utils.FileUtils;
 import org.json.simple.JSONObject;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
 import java.util.List;
 
 public class Verify_Download_Files {
@@ -16,7 +15,7 @@ public class Verify_Download_Files {
     public void TestCase4(){
         System.out.println("------------Read CSV file in local------------");
         String filePath = "/downloads/car.csv";
-        List<List<String>> records = fileUtils.readCSV(filePath);
+        List<List<String>> records = FileUtils.readCSV(filePath);
         for (List<String> record: records) {
             System.out.println(record);
         }
@@ -27,8 +26,8 @@ public class Verify_Download_Files {
         System.out.println("------------Read JSON file in local------------");
 //        String filePath = "/downloads/employees.json";
         String filePath = "/downloads/downloaded_employees.json";
-        JSONObject json = fileUtils.readJSON(filePath);
-        List<EmployeeDetails> employeeDetailsList = fileUtils.parseEmployeeDataTest(json);
+        JSONObject json = FileUtils.readJSON(filePath);
+        List<EmployeeDetails> employeeDetailsList = FileUtils.parseEmployeeDataTest(json);
         for(EmployeeDetails employee : employeeDetailsList){
             System.out.println("id: " + employee.getId());
             System.out.println("name: " + employee.getFirstName() + " " + employee.getLastName());
@@ -39,7 +38,7 @@ public class Verify_Download_Files {
     @Test(description = "Read CSV file in local.")
     public void TestCase6() {
         System.out.println("------------Read CSV file in local------------");
-        List<CarDetails> carDetailsList = fileUtils.readCSVByScanner();
+        List<CarDetails> carDetailsList = FileUtils.readCSVByScanner();
         for (int i = 1; i < carDetailsList.size(); i++) {
             System.out.println("year.." + carDetailsList.get(i).getCarYear());
             System.out.println("make.." + carDetailsList.get(i).getCarMake());
@@ -53,7 +52,7 @@ public class Verify_Download_Files {
         String fileName = "downloaded_employees.json";
         System.out.println("------------Download file from URL.------------\n" + "URL: " + url);
                 try {
-                    fileUtils.downloadFromUrl(url, fileName);
+                    FileUtils.downloadFromUrl(url, fileName);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

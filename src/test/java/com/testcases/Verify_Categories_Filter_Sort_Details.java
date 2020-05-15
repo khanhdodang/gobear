@@ -5,6 +5,8 @@ import com.objects.CarDetails;
 import com.pages.DetailsPage;
 import com.pages.SearchProductsPage;
 import com.profiles.DefaultProfile;
+import com.utils.FileUtils;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -12,7 +14,7 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 
 public class Verify_Categories_Filter_Sort_Details {
-
+    final static Logger logger = Logger.getLogger(FileUtils.class);
     private RemoteWebDriver driver = null;
     SearchProductsPage searchProductsPage;
     DetailsPage detailsPage;
@@ -46,7 +48,7 @@ public class Verify_Categories_Filter_Sort_Details {
         System.out.println("Step: Get Car details in left navigation of Car Insurance detail page");
         CarDetails carInfoOnLeftNav = detailsPage.getCarDetailsOnLeftNav();
         System.out.println("Step: Assert card details on left navigation of Car Insurance detail page");
-        Assert.assertTrue(searchCarIns.equals(carInfoOnLeftNav));
+        Assert.assertEquals(carInfoOnLeftNav, searchCarIns);
         System.out.println("Step: Assert Car insurance plans");
         detailsPage.assertCarInsurancePlans();
     }
@@ -86,7 +88,7 @@ public class Verify_Categories_Filter_Sort_Details {
         detailsPage.assertFilterLoanStatus("NO", "6");
         detailsPage.assertFilterLoanStatus("YES", "6");
         // Select Car Details
-        detailsPage.assertFilterCarDetails("2017", "SUZUKI", "Alto 800", "I don\'t know", "6");
+        detailsPage.assertFilterCarDetails("2017", "SUZUKI", "Alto 800", "I don't know", "6");
     }
 
     @AfterTest

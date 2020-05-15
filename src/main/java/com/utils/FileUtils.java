@@ -3,6 +3,7 @@ package com.utils;
 import com.objects.CarDetails;
 import com.objects.EmployeeDetails;
 import com.profiles.DefaultProfile;
+import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -19,7 +20,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class FileUtils {
-    private static String COMMA_DELIMITER = ",";
+    final static Logger logger = Logger.getLogger(FileUtils.class);
+    private static final String COMMA_DELIMITER = ",";
 
     public static List<List<String>> readCSV(String filePath) {
         InputStream is = FileUtils.class.getResourceAsStream(filePath);
@@ -33,7 +35,7 @@ public class FileUtils {
             }
             csvReader.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("File is not accessible", e);
         }
         return records;
     }
@@ -43,9 +45,9 @@ public class FileUtils {
         try {
             csvReader = new BufferedReader(new FileReader(FileUtils.class.getResource(DefaultProfile.PATH_CSV).getFile()));
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error("File not found", e);
         }
-        List<CarDetails> records = new ArrayList<CarDetails>();
+        List<CarDetails> records = new ArrayList<>();
         String row;
         try {
             while ((row = csvReader.readLine()) != null) {
@@ -58,7 +60,7 @@ public class FileUtils {
             }
             csvReader.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("File is not accessible", e);
         }
         return records;
     }
@@ -66,13 +68,13 @@ public class FileUtils {
     public static List<CarDetails> readCSVByScanner() {
         Scanner scanner = null;
         try {
-            scanner = new Scanner(new File(FileUtils.class.getResource(DefaultProfile.PATH_CSV).getFile()));
+           scanner = new Scanner(new File(FileUtils.class.getResource(DefaultProfile.PATH_CSV).getFile()));
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error("File not found", e);
         }
         int index = 0;
-        List<CarDetails> records = new ArrayList<CarDetails>();
-        Scanner rowScanner = null;
+        List<CarDetails> records = new ArrayList<>();
+        Scanner rowScanner;
         while (scanner.hasNextLine()) {
             rowScanner = new Scanner(scanner.nextLine());
             rowScanner.useDelimiter(COMMA_DELIMITER);
@@ -103,11 +105,11 @@ public class FileUtils {
             try {
                 jsonObject = (JSONObject) jsonParser.parse(reader);
             } catch (ParseException e) {
-                e.printStackTrace();
+                logger.error("Unable to parse Json", e);
             }
             System.out.println(jsonObject);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("File is not accessible", e);
         }
         return jsonObject;
     }
@@ -124,7 +126,7 @@ public class FileUtils {
 
     public static List<EmployeeDetails> parseEmployeeDataTest(JSONObject json) {
         JSONArray employees = (JSONArray) json.get("employees");
-        List<EmployeeDetails> employeeDetailsList = new ArrayList<EmployeeDetails>();
+        List<EmployeeDetails> employeeDetailsList = new ArrayList<>();
         for (Object e : employees) {
             JSONObject eJson = (JSONObject) e;
             EmployeeDetails record = EmployeeDetails.jsonFormat(eJson);
@@ -136,13 +138,13 @@ public class FileUtils {
     private static void displayTextInputStream(InputStream input) throws IOException {
         // Read the text input stream one line at a time and display each line.
         BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-        String line = null;
+        String line;
         while ((line = reader.readLine()) != null) {
             System.out.println(line);
         }
     }
 
-    public static boolean downloadFromUrl(String url, String fileName) throws Exception {
+    public static void downloadFromUrl(String url, String fileName) throws Exception {
         File targetFile = new File(FileUtils.class.getResource(DefaultProfile.DOWNLOAD_PATH).getPath() + File.separator + fileName);
         Path targetPath = targetFile.toPath();
         System.out.println("Target folder: " + targetPath);
@@ -154,7 +156,7 @@ public class FileUtils {
         }
         boolean isDownloaded = Files.exists(targetPath);
         System.out.println("Downloading... " + Files.exists(targetPath));
-        if (isDownloaded == true) {
+        if (isDownloaded) {
             System.out.println("Download successfully. File exists in target folder");
             System.out.println("File size: " + copy);
         } else {
@@ -163,6 +165,5 @@ public class FileUtils {
         System.out.println("Downloaded file content: ");
         InputStream targetStream = new FileInputStream(targetFile);
         displayTextInputStream(targetStream);
-        return isDownloaded;
     }
 }

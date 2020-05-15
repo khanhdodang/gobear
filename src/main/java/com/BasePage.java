@@ -1,6 +1,7 @@
 package com;
 
 import com.profiles.DefaultProfile;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -13,7 +14,9 @@ import java.io.File;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+@SuppressWarnings("ALL")
 public class BasePage {
+    final static Logger logger = Logger.getLogger(BasePage.class);
     private RemoteWebDriver driver = null;
 
     /**
@@ -44,6 +47,7 @@ public class BasePage {
 
                 // Now checking for existence of Firefox executable.
                 if (!new File("/Applications/Firefox.app/Contents/MacOS/firefox").exists()) {
+                    //noinspection SpellCheckingInspection
                     throw new RuntimeException("Cannot find geckodriver file. Please download and copy to drivers folder in current project");
                 }
             }
@@ -62,7 +66,7 @@ public class BasePage {
             WebElement element = driver.findElement(by);
             element.click();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("Unable to find element "+ by, ex);
         }
     }
 
@@ -76,7 +80,7 @@ public class BasePage {
             WebElement element = driver.findElement(by);
             return element.isDisplayed();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("Unable to find element "+ by, ex);
         }
         return false;
     }
@@ -93,7 +97,7 @@ public class BasePage {
             WebDriverWait wait = new WebDriverWait(driver,timeout);
             wait.until(ExpectedConditions.visibilityOf(element));
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("Unable to find element "+ by, ex);
         }
     }
 
@@ -108,7 +112,7 @@ public class BasePage {
             WebDriverWait wait = new WebDriverWait(driver, timeout);
             wait.until(ExpectedConditions.elementToBeClickable(by));
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("Unable to find element "+ by, ex);
         }
     }
 
@@ -123,9 +127,9 @@ public class BasePage {
             driver.findElement(by);
             flag = true;
         }  catch (NoSuchElementException ex) {
-            System.out.println(ex.getMessage());
+            logger.error("No such element "+ by, ex);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("Unable to find element "+ by, ex);
         }
         return flag;
     }
@@ -141,9 +145,9 @@ public class BasePage {
             driver.findElement(by).isSelected();
             flag = true;
         }  catch (NoSuchElementException ex) {
-            System.out.println(ex.getMessage());
+            logger.error("No such element "+ by, ex);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("Unable to find element "+ by, ex);
         }
         return flag;
     }
@@ -158,9 +162,9 @@ public class BasePage {
         try {
             text = driver.findElement(by).getText();
         }  catch (NoSuchElementException ex) {
-            System.out.println(ex.getMessage());
+            logger.error("No such element "+ by, ex);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("Unable to find element "+ by, ex);
         }
         return text;
     }
@@ -176,9 +180,9 @@ public class BasePage {
             List<WebElement> listOfElements = driver.findElements(by);
             text = listOfElements.get(index).getText();
         }  catch (NoSuchElementException ex) {
-            System.out.println(ex.getMessage());
+            logger.error("No such element "+ by, ex);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("Unable to find element "+ by, ex);
         }
         return text;
     }
@@ -194,7 +198,7 @@ public class BasePage {
             List<WebElement> listOfElements = driver.findElements(by);
             return listOfElements.size();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("Unable to find element "+ by, ex);
         }
         return total;
     }
@@ -223,7 +227,7 @@ public class BasePage {
         try {
             driver.manage().window().maximize();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("Error maximizing window", ex);
         }
     }
 
@@ -235,7 +239,7 @@ public class BasePage {
         try {
             driver.get(url);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("Error getting url " + url, ex);
         }
     }
 
@@ -247,7 +251,7 @@ public class BasePage {
         try {
             Thread.sleep(seconds * 1000);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error("Unexpected error", ex);
         }
     }
 }

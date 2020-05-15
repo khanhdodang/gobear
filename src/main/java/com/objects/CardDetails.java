@@ -74,7 +74,7 @@ public class CardDetails {
 
     @Override
     public String toString() {
-        return String.format(ownDamageAndTheft + ";" + VTPLBodilyInjury + ";" + VTPLPropertyDamage
-        + ";" + ActOfNature + ";" + WhenSomeoneInYourCarGetsHurt);
+        return ownDamageAndTheft + ";" + VTPLBodilyInjury + ";" + VTPLPropertyDamage
+        + ";" + ActOfNature + ";" + WhenSomeoneInYourCarGetsHurt;
     }
 }
