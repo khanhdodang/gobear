@@ -1,11 +1,16 @@
 package com.pages;
 
 import com.BasePage;
+import com.data.DetailsPageData;
 import com.objects.CarDetails;
 import com.objects.CardDetails;
 import com.profiles.DefaultProfile;
+import junit.framework.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +32,7 @@ public class DetailsPage extends BasePage {
     String YearButton = "//div[@data-gb-name=\"car-year\"]/button";
     String MakeButton = "//div[@data-gb-name=\"car-make\"]/button";
     String ModelButton = "//div[@data-gb-name=\"car-model\"]/button";
+    String VariantButton = "//div[@data-gb-name=\"car-variant\"]/button";
 
     // Elements on Content Details
     String TopCoveragesContainer = "//div[@data-gb-name=\"top-coverages\"]";
@@ -59,7 +65,7 @@ public class DetailsPage extends BasePage {
     String InsuredDropdown = "//div[@data-gb-name=\"select-insured\"]//select";
     // Filters Elements
     String cancelButton = "//div[@class=\"popover-navigation\"]/button[text()=\"cancel\"]";
-    String ClearAllButton = "//div[@class=\"filter-detail sidebar-item\"]//h5/a[@data-gb-name=\"filter-reset\" and text()=\"CLEAR ALL\"]";
+    String ClearAllButton = "//a[@data-gb-name=\"filter-reset\" and text()=\"CLEAR ALL\"]";
 
     // Sort Elements
     String PriceLowToHigh = "//div[@class=\"sort-detail sidebar-item\"]//input[@value=\"premium-Asc\"]/following-sibling::label";
@@ -147,6 +153,18 @@ public class DetailsPage extends BasePage {
         return getTotalElements(driver, By.xpath(WhenSomeoneInYourCarGetsHurtLabel));
     }
 
+    public CarDetails getDefaultCarDetails() {
+        CarDetails carDetails = new CarDetails();
+        carDetails.setCarYear(DetailsPageData.CAR_YEAR);
+        carDetails.setCarMake(DetailsPageData.CAR_MAKE);
+        carDetails.setCarModel(DetailsPageData.CAR_MODEL);
+        carDetails.setCarVariant(DetailsPageData.CAR_VARIANT);
+        carDetails.setCarUsage(DetailsPageData.CAR_USAGE);
+        carDetails.setStillPayingForCarLoan(DetailsPageData.STILL_PAYING_FOR_CAR_LOAN);
+        carDetails.setInsuredFor(DetailsPageData.INSURED_FOR);
+        return carDetails;
+    }
+
     public CarDetails getCarDetails() {
         CarDetails carDetails = new CarDetails();
         carDetails.setCarYear(getTextFromElement(driver, By.xpath(CarYearSelectedOption_CarDetails)));
@@ -159,11 +177,21 @@ public class DetailsPage extends BasePage {
         return carDetails;
     }
 
+    public CardDetails getDefaultCardDetails() {
+        CardDetails cardDetails = new CardDetails();
+        cardDetails.setOwnDamageAndTheft(DetailsPageData.OWN_DAMAGE_AND_THEFT);
+        cardDetails.setVTPLBodilyInjury(DetailsPageData.VTPL_BODILY_INJURY);
+        cardDetails.setVTPLPropertyDamage(DetailsPageData.VTPL_PROPERTY_DAMAGE);
+        cardDetails.setActOfNature(DetailsPageData.ACT_OF_NATURE);
+        cardDetails.setWhenSomeoneInYourCarGetsHurt(DetailsPageData.WHEN_SOMEONE_IN_YOUR_CAR_GETS_HURT);
+        return cardDetails;
+    }
+
     public List<CardDetails> getCardDetails() {
         List<CardDetails> cardDetailsList = new ArrayList<CardDetails>();
         int total = getTotalElements(driver, By.xpath(TopCoveragesContainer));
-
-        for (int i = 1; i < total+1; i++) {
+        System.out.println("Number of car insurance plans found " + total);
+        for (int i = 1; i < total + 1; i++) {
             CardDetails cardDetails = new CardDetails();
             cardDetails.setOwnDamageAndTheft(getTextFromElements(driver, By.xpath(cardFullSelector(i)), 0));
             cardDetails.setVTPLBodilyInjury(getTextFromElements(driver, By.xpath(cardFullSelector(i)), 1));
@@ -202,19 +230,46 @@ public class DetailsPage extends BasePage {
         sleep(1);
     }
 
+    public void verifyUIs() {
+//        System.out.println("We should integrate with http://applitools.com/ to compare images instead of selecting each element to check.");
+
+        // 3 Logos & Headers; Note: We can do the same thing for 3 others
+        Assert.assertTrue(doesQBESeaboardHeaderExist());
+        Assert.assertTrue(doesQBESeaboardLogoExist());
+        Assert.assertTrue(doesMAPFREInsularHeaderExist());
+        Assert.assertTrue(doesMAPFREInsularLogoExist());
+        Assert.assertTrue(doesPNBGeneralInsurersHeaderExist());
+        Assert.assertTrue(doesPNBGeneralInsurersLogoExist());
+
+        // Buttons in Card
+        Assert.assertEquals(getTotalAddonButton(), 6);
+        Assert.assertEquals(getTotalCompareButton(), 6);
+        Assert.assertEquals(getTotalReadMoreButton(), 6);
+        Assert.assertEquals(getTotalContactProviderButton(), 6);
+
+        // content-detail
+        Assert.assertEquals(getTotalOwnDamageAndTheftLabel(), 6);
+        Assert.assertEquals(getTotalVTPLBodilyInjuryLabel(), 6);
+        Assert.assertEquals(getTotalVTPLPropertyDamageLabel(), 6);
+        Assert.assertEquals(getTotalAddonButton(), 6);
+        Assert.assertEquals(getTotalActOfNatureLabel(), 6);
+        Assert.assertEquals(getTotalWhenSomeoneInYourCarGetsHurtLabel(), 6);
+    }
+
     /**
      * Select an option to sort
+     *
      * @param option PRICE_LOW_HIGH, PRICE_HIGH_LOW, INSURER_AZ, INSURER_ZA
      */
-    public void sortDetail(String option){
+    public void sortDetail(String option) {
         option = option.toUpperCase();
         if (option.equals("PRICE_LOW_HIGH")) {
             sortDetail(1);
-        } else if(option.equals("PRICE_HIGH_LOW")) {
+        } else if (option.equals("PRICE_HIGH_LOW")) {
             sortDetail(2);
-        } else if(option.equals("INSURER_AZ")) {
+        } else if (option.equals("INSURER_AZ")) {
             sortDetail(3);
-        } else if(option.equals("INSURER_ZA")) {
+        } else if (option.equals("INSURER_ZA")) {
             sortDetail(4);
         } else {
             System.out.println("The option is incorrect. Please check again.");
@@ -223,9 +278,10 @@ public class DetailsPage extends BasePage {
 
     /**
      * Select an option to sort
+     *
      * @param option 1:PRICE_LOW_HIGH, 2:PRICE_HIGH_LOW, 3:INSURER_AZ, 4:INSURER_ZA
      */
-    public void sortDetail(int option){
+    public void sortDetail(int option) {
         scrollToY(driver, 200);
         switch (option) {
             case 1:
@@ -248,59 +304,72 @@ public class DetailsPage extends BasePage {
 
     /**
      * Filter Insurers
+     *
      * @param filterName Alpha Insurance, MAPFRE Insular, Pacific Union Insurance,
      *                   PhilsFirst Insurance, PNB General Insurers, QBE Seaboard
      */
-    public void filterInsurers(String filterName){
-        scrollToY(driver, 400);
-        click(driver, By.xpath(filterElementInsurerId(filterName)));
+    public void filterInsurers(String filterName) {
+        WebElement filter = driver.findElement(By.xpath(filterElementInsurerId(filterName)));
+        new WebDriverWait(driver, 20).until(ExpectedConditions.elementToBeClickable(filter));
+        filter.click();
         waitContainerDisplay();
     }
 
     /**
      * Filter Benefits
+     *
      * @param filterName Act of Nature, Personal Accident, Roadside Assistance
      */
-    public void filterBenefits(String filterName){
-        scrollToY(driver, 400);
+    public void filterBenefits(String filterName) {
         click(driver, By.xpath(filterElementBenefits(filterName)));
         waitContainerDisplay();
     }
 
     /**
      * Filter Car Usage
+     *
      * @param filterName PRIVATE, CarUsageForHireUberGrab
      */
-    public void filterCarUsage(String filterName){
+    public void filterCarUsage(String filterName) {
         if (filterName.toUpperCase().equals("PRIVATE")) {
             click(driver, By.xpath(CarUsagePrivate));
+            waitContainerDisplay();
         } else {
             click(driver, By.xpath(CarUsageForHireUberGrab));
         }
-        waitContainerDisplay();
     }
 
     public void editYear(String year) {
+        System.out.println("Edit Year value to: " + year);
         click(driver, By.xpath(YearButton));
         click(driver, By.xpath(YearDropdown(year)));
     }
 
 
     public void editMake(String make) {
+        System.out.println("Edit Make value to: " + make);
         click(driver, By.xpath(MakeButton));
         click(driver, By.xpath(MakeDropdown(make)));
     }
 
     public void editModel(String model) {
+        System.out.println("Edit Model value to: " + model);
         click(driver, By.xpath(ModelButton));
         click(driver, By.xpath(ModelDropdown(model)));
     }
 
+    public void editVariant(String variant) {
+        System.out.println("Edit Variant value to: " + variant);
+        click(driver, By.xpath(VariantButton));
+        click(driver, By.xpath(VariantDropdown(variant)));
+    }
+
     /**
      * Filter LoanStatus
+     *
      * @param filterName Yes, No
      */
-    public void filterLoanStatus(String filterName){
+    public void filterLoanStatus(String filterName) {
         if (filterName.toUpperCase().equals("YES")) {
             click(driver, By.xpath(LoanStatusYes));
         } else {
@@ -313,14 +382,18 @@ public class DetailsPage extends BasePage {
     /**
      * Clear Filter Insurer
      */
-    public void clearFilterInsurer(){
-        if(doesElementExist(driver, By.xpath(cancelButton))) {
+    public void clearFilterInsurer() {
+        scrollToY(driver, 400);
+        System.out.println("Resetting filters..");
+        click(driver, By.xpath(ClearAllButton));
+        waitContainerDisplay();
+    }
+
+    public void dismissPopup() {
+        if (doesElementExist(driver, By.xpath(cancelButton))) {
             click(driver, By.xpath(cancelButton));
-            scrollToY(driver, 400);
             sleep(2);
         }
-        click(driver, By.xpath(filterElementInsurerId(ClearAllButton)));
-        waitContainerDisplay();
     }
 
     @Override
@@ -340,12 +413,12 @@ public class DetailsPage extends BasePage {
         return "//div[@data-filter-by=\"benefits\"]//div[@data-filter-name=\"" + dataFilterName + "\"]";
     }
 
-    String searchResultsText1(String result){
+    String searchResultsText1(String result) {
         return "//div[contains(@class,  \"results-text\")]//*[text()=\"" + result + " car insurance plans found\"]";
     }
 
-    String searchResultsText2(String result){
-        return "//div[contains(@class,  \"results-text\")]//*[text()=\"" + result + "\"]";
+    String searchResultsText2(String result) {
+        return "//div[contains(@class,  \"results-text\")]//*[contains(text(),\"" + result + "\")]";
     }
 
     String YearDropdown(String value) {
@@ -358,5 +431,118 @@ public class DetailsPage extends BasePage {
 
     String ModelDropdown(String value) {
         return "//div[@data-gb-name=\"car-model\"]/div[@class=\"dropdown-menu open\"]/ul/li/a/span[text()=\"" + value + "\"]/parent::a//parent::li";
+    }
+
+    String VariantDropdown(String value) {
+        return "//div[@data-gb-name=\"car-variant\"]/div[@class=\"dropdown-menu open\"]//span[text()=\"" + value + "\"]/parent::a//parent::li";
+    }
+
+    public CarDetails getCarDetailsOnLeftNav() {
+        sleep(3);
+        waitContainerDisplay();
+        System.out.println("Verify Car Insurance Details page is displayed properly");
+        verifyUIs();
+        CarDetails carDetailsAfterSearch = this.getCarDetails();
+        return carDetailsAfterSearch;
+    }
+
+    public void assertDefaultCarSearch(CarDetails carDetails) {
+        Assert.assertTrue("Default Car search info does not match",carDetails.equals(getDefaultCarDetails()));
+    }
+
+    public void assertCarInsurancePlans() {
+        List<CardDetails> cardDetailsList = this.getCardDetails();
+        System.out.println("Verify price of each plan");
+        List<String> prices = this.getPrices();
+        Assert.assertEquals(prices, DetailsPageData.PRICES());
+
+        System.out.println("Verify details of each plan");
+        for (CardDetails c : cardDetailsList) {
+            Assert.assertTrue(c.equals(getDefaultCardDetails()));
+        }
+    }
+
+    public void assertSortOptions(int opt) {
+        ArrayList<String> headers = new ArrayList<>();
+        ArrayList<String> prices = new ArrayList<>();
+
+        switch (opt) {
+            case 1:
+                headers = DetailsPageData.HEADERS();
+                prices = DetailsPageData.PRICES();
+                break;
+            case 2:
+                headers = DetailsPageData.HEADERS_HighLow();
+                prices = DetailsPageData.PRICES_HighLow();
+                break;
+            case 3:
+                headers = DetailsPageData.HEADERS_InsurerAZ();
+                prices = DetailsPageData.PRICES_InsurerAZ();
+                break;
+            case 4:
+                headers = DetailsPageData.HEADERS_InsurerZA();
+                prices = DetailsPageData.PRICES_InsurerZA();
+                break;
+            default:
+                break;
+        }
+
+        sortDetail(opt);
+
+        for (int i = 0; i < this.getPlanNames().size(); i++) {
+            Assert.assertEquals("Plan's name does not match", this.getPlanNames().get(i), headers.get(i));
+        }
+
+        for (int i = 0; i < this.getPrices().size(); i++) {
+            Assert.assertEquals("Plan's price does not match",this.getPrices().get(i), prices.get(i));
+        }
+    }
+
+    public void assertFilterInsurer(String insurer, String expectedTotalPlanFound) {
+        clearFilterInsurer();
+        System.out.println("Filter Insurer: " + insurer);
+        filterInsurers(insurer);
+        Assert.assertEquals("Not found " + insurer, getPlanNames().get(0), insurer);
+        Assert.assertTrue("Number not match with expected: " + expectedTotalPlanFound, doesResults1Exist(expectedTotalPlanFound));
+    }
+
+    public void assertFilterBenefit(String benefit, String expectedTotalPlanFound) {
+        clearFilterInsurer();
+        System.out.println("Filter Benefits: " + benefit);
+        filterBenefits(benefit);
+        Assert.assertTrue("Number not match with expected: " + expectedTotalPlanFound, doesResults1Exist(expectedTotalPlanFound));
+    }
+
+    public void assertFilterCarUsage(String usage, String expectedTotalPlanFound) {
+        System.out.println("Filter Car Usage: " + usage);
+        filterCarUsage(usage);
+        Assert.assertTrue("Number not match with expected: " + expectedTotalPlanFound, doesResults1Exist(expectedTotalPlanFound));
+        filterCarUsage("PRIVATE");
+    }
+
+    public void assertFilterLoanStatus(String status, String expectedTotalPlanFound) {
+        filterLoanStatus(status);
+        if (status.equalsIgnoreCase("NO")) {
+            for (int i = 0; i < this.getPlanNames().size(); i++) {
+                Assert.assertEquals("Plans does not match", this.getPlanNames().get(i), DetailsPageData.HEADERS_LoanStatusNo().get(i));
+            }
+        } else {
+            for (int i = 0; i < this.getPlanNames().size(); i++) {
+                Assert.assertEquals("Plans does not match", this.getPlanNames().get(i), DetailsPageData.HEADERS().get(i));
+            }
+        }
+        Assert.assertTrue("Number not match with expected: " + expectedTotalPlanFound, doesResults1Exist(expectedTotalPlanFound));
+    }
+
+    public void assertFilterCarDetails(String year, String make, String model, String variant, String expectedTotalPlanFound) {
+        clearFilterInsurer();
+        this.scrollToTop(driver);
+        // Select Car Details
+        editYear(year);
+        editMake(make);
+        editModel(model);
+        editVariant(variant);
+        Assert.assertTrue("Number not match with expected: " + expectedTotalPlanFound, this.doesResults1Exist(expectedTotalPlanFound));
+        Assert.assertTrue("Car details not match", this.doesResults2Exist(year + " | " + make + " | " + model));
     }
 }

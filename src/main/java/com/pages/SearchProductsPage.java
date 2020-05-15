@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 public class SearchProductsPage extends BasePage {
 
     private WebDriver driver;
+    DetailsPage detailsPage;
 
     public SearchProductsPage(WebDriver driver) {
         this.driver = driver;
@@ -21,7 +22,7 @@ public class SearchProductsPage extends BasePage {
     String CarVariant = "//div[@id=\"car-form\"]//div[@gb-data-name=\"car-variant\"]//div[contains(@class, \"select-component\")]//span[@class=\"filter-option clearfix\"]";
     String StillPayingForMyCarLoan = "//input[@name=\"car-form-stillPaying\"]";
     String CarUsage = "//div[@gb-data-name=\"car-usage\"]//span[@class=\"filter-option clearfix\"]";
-    String InsuredFor ="//div[@gb-data-name=\"sum-insured\"]//span[@class=\"filter-option clearfix\"]";
+    String InsuredFor = "//div[@gb-data-name=\"sum-insured\"]//span[@class=\"filter-option clearfix\"]";
 
     public void clickInsuranceTab() {
         click(driver, By.xpath(InsuranceTab));
@@ -49,6 +50,18 @@ public class SearchProductsPage extends BasePage {
         carDetails.setCarUsage(getTextFromElement(driver, By.xpath(CarUsage)));
         carDetails.setStillPayingForCarLoan(isElementSelected(driver, By.xpath(StillPayingForMyCarLoan)));
         carDetails.setInsuredFor(getTextFromElement(driver, By.xpath(InsuredFor)));
+        return carDetails;
+    }
+
+    public CarDetails searchCarInsurance() {
+        System.out.println("Search for Car Insurance");
+        clickInsuranceTab();
+        clickCarTab();
+        waitForkShowMyResultsButtonClickable();
+        detailsPage = new DetailsPage(driver);
+        CarDetails carDetails = this.getCarDetails();
+        clickShowMyResultsButton();
+        detailsPage.dismissPopup();
         return carDetails;
     }
 }
