@@ -24,8 +24,7 @@ public class Verify_Download_Files {
     @Test(description = "Read JSON file in local.")
     public void TestCase5(){
         System.out.println("------------Read JSON file in local------------");
-//        String filePath = "/downloads/employees.json";
-        String filePath = "/downloads/downloaded_employees.json";
+        String filePath = "/downloads/employees.json";
         JSONObject json = FileUtils.readJSON(filePath);
         List<EmployeeDetails> employeeDetailsList = FileUtils.parseEmployeeDataTest(json);
         for(EmployeeDetails employee : employeeDetailsList){

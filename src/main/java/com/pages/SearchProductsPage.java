@@ -8,27 +8,29 @@ import org.openqa.selenium.WebDriver;
 
 public class SearchProductsPage extends BasePage {
 
-    private final WebDriver driver;
+    private WebDriver driver;
     DetailsPage detailsPage;
 
     public SearchProductsPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    final String InsuranceTab = "//a[@aria-controls=\"Insurance\" and @role=\"tab\"]";
-    final String CarTab = "//a[@aria-controls=\"Car\" and @role=\"tab\"]";
-    final String ShowMyResultsButton = "product-form-submit";
-    final String CarInfo = "//div[@id=\"car-form\"]//div[@gb-data-name=\"car-info\"]//div[contains(@class, \"select-component\")]//span[@class=\"filter-option clearfix\"]";
-    final String CarVariant = "//div[@id=\"car-form\"]//div[@gb-data-name=\"car-variant\"]//div[contains(@class, \"select-component\")]//span[@class=\"filter-option clearfix\"]";
-    final String StillPayingForMyCarLoan = "//input[@name=\"car-form-stillPaying\"]";
-    final String CarUsage = "//div[@gb-data-name=\"car-usage\"]//span[@class=\"filter-option clearfix\"]";
-    final String InsuredFor = "//div[@gb-data-name=\"sum-insured\"]//span[@class=\"filter-option clearfix\"]";
+    String InsuranceTab = "//a[@aria-controls=\"Insurance\" and @role=\"tab\"]";
+    String CarTab = "//a[@aria-controls=\"Car\" and @role=\"tab\"]";
+    String ShowMyResultsButton = "product-form-submit";
+    String CarInfo = "//div[@id=\"car-form\"]//div[@gb-data-name=\"car-info\"]//div[contains(@class, \"select-component\")]//span[@class=\"filter-option clearfix\"]";
+    String CarVariant = "//div[@id=\"car-form\"]//div[@gb-data-name=\"car-variant\"]//div[contains(@class, \"select-component\")]//span[@class=\"filter-option clearfix\"]";
+    String StillPayingForMyCarLoan = "//input[@name=\"car-form-stillPaying\"]";
+    String CarUsage = "//div[@gb-data-name=\"car-usage\"]//span[@class=\"filter-option clearfix\"]";
+    String InsuredFor = "//div[@gb-data-name=\"sum-insured\"]//span[@class=\"filter-option clearfix\"]";
 
     public void clickInsuranceTab() {
+        waitForElementClickable(driver, By.xpath(InsuranceTab), DefaultProfile.WAIT_PRESENT_TIMEOUT);
         click(driver, By.xpath(InsuranceTab));
     }
 
     public void clickCarTab() {
+        waitForElementClickable(driver, By.xpath(CarTab), DefaultProfile.WAIT_PRESENT_TIMEOUT);
         click(driver, By.xpath(CarTab));
     }
 

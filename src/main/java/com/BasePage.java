@@ -26,7 +26,8 @@ public class BasePage {
         if (browser.toLowerCase().equals("chrome")) {
             if (System.getProperty("os.name").contains("Mac")) {
                 File cDriver = new File(BasePage.class.getResource(DefaultProfile.MAC_CHROME_DRIVER).getFile());
-                System.setProperty("webdriver.chrome.driver", BasePage.class.getResource(DefaultProfile.MAC_CHROME_DRIVER).getFile());
+//                System.setProperty("webdriver.chrome.driver", BasePage.class.getResource(DefaultProfile.MAC_CHROME_DRIVER).getFile());
+                System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"/src/main/resources/drivers/chromedriver");
 
                 // Now checking for existence of Chrome executable.
                 if (!new File("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome").exists()) {
@@ -43,7 +44,8 @@ public class BasePage {
 
         } else if (browser.toLowerCase().equals("firefox")) {
             if (System.getProperty("os.name").contains("Mac")) {
-                System.setProperty("webdriver.gecko.driver", DefaultProfile.MAC_FIREFOX_DRIVER);
+//                System.setProperty("webdriver.gecko.driver", BasePage.class.getResource(DefaultProfile.MAC_FIREFOX_DRIVER).getFile());
+                System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir")+"/src/main/resources/drivers/geckodriver");
 
                 // Now checking for existence of Firefox executable.
                 if (!new File("/Applications/Firefox.app/Contents/MacOS/firefox").exists()) {

@@ -17,68 +17,66 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class DetailsPage extends BasePage {
-    final static Logger logger = Logger.getLogger(FileUtils.class);
 
     // Elements on Card Details
-    final String QBESeaboardHeader = "//h4[text()='QBE Seaboard']";
-    final String QBESeaboardLogo = "//img[contains(@src, \"https://gobear-images-cdn.azureedge.net/ph/insuerlogos/81adbc97-b0cf-4984-aae6-26266700be29.png\") and @alt=\"QBE Seaboard\"]";
-    final String MAPFREInsularHeader = "//h4[text()='MAPFRE Insular']";
-    final String MAPFREInsularLogo = "//img[contains(@src, \"https://gobear-images-cdn.azureedge.net/sg-acc/insuerlogos/f31aed50-38f6-4067-b1e3-b9d62fcc4899.png\") and @alt=\"MAPFRE Insular\"]";
-    final String PNBGeneralInsurersHeader = "//h4[text()='PNB General Insurers']";
-    final String PNBGeneralInsurersLogo = "//img[contains(@src, \"https://gobear-images-cdn.azureedge.net/sg-acc/insuerlogos/2910cdd1-7661-4b40-bd08-2135f4d049e4.png\") and @alt=\"PNB General Insurers\"]";
-    final String AddOnButton = "//a[@role=\"button\" and contains(text(), \"Add on\")]";
-    final String CompareButton = "//a[@data-gb-name=\"card-compare-button\" and contains(text(), \"Compare\")]";
-    final String ReadMoreButton = "//a[contains(@class, \"btn-read-more\") and contains(text(), \"Read more\")]";
-    final String ContactProviderButton = "//a[contains(@class, \"btn-checkout\") and contains(text(), \"CONTACT PROVIDER\")]";
-    final String YearButton = "//div[@data-gb-name=\"car-year\"]/button";
-    final String MakeButton = "//div[@data-gb-name=\"car-make\"]/button";
-    final String ModelButton = "//div[@data-gb-name=\"car-model\"]/button";
-    final String VariantButton = "//div[@data-gb-name=\"car-variant\"]/button";
+    String QBESeaboardHeader = "//h4[text()='QBE Seaboard']";
+    String QBESeaboardLogo = "//img[contains(@src, \"https://gobear-images-cdn.azureedge.net/ph/insuerlogos/81adbc97-b0cf-4984-aae6-26266700be29.png\") and @alt=\"QBE Seaboard\"]";
+    String MAPFREInsularHeader = "//h4[text()='MAPFRE Insular']";
+    String MAPFREInsularLogo = "//img[contains(@src, \"https://gobear-images-cdn.azureedge.net/sg-acc/insuerlogos/f31aed50-38f6-4067-b1e3-b9d62fcc4899.png\") and @alt=\"MAPFRE Insular\"]";
+    String PNBGeneralInsurersHeader = "//h4[text()='PNB General Insurers']";
+    String PNBGeneralInsurersLogo = "//img[contains(@src, \"https://gobear-images-cdn.azureedge.net/sg-acc/insuerlogos/2910cdd1-7661-4b40-bd08-2135f4d049e4.png\") and @alt=\"PNB General Insurers\"]";
+    String AddOnButton = "//a[@role=\"button\" and contains(text(), \"Add on\")]";
+    String CompareButton = "//a[@data-gb-name=\"card-compare-button\" and contains(text(), \"Compare\")]";
+    String ReadMoreButton = "//a[contains(@class, \"btn-read-more\") and contains(text(), \"Read more\")]";
+    String ContactProviderButton = "//a[contains(@class, \"btn-checkout\") and contains(text(), \"CONTACT PROVIDER\")]";
+    String YearButton = "//div[@data-gb-name=\"car-year\"]/button";
+    String MakeButton = "//div[@data-gb-name=\"car-make\"]/button";
+    String ModelButton = "//div[@data-gb-name=\"car-model\"]/button";
+    String VariantButton = "//div[@data-gb-name=\"car-variant\"]/button";
 
     // Elements on Content Details
-    final String TopCoveragesContainer = "//div[@data-gb-name=\"top-coverages\"]";
-    final String PolicyPrice = "//div[@class=\"policy-price\"]";
-    final String PlanName = "//div[@data-gb-name=\"car-plan\"]//h4[contains(@class,\"name\")]";
-    final String OwnDamageAndTheftLabel = "//div[@data-gb-name=\"top-coverages\"]//div/p[contains(@class, \"detail-key\") and text()=\"Own Damage & Theft\"]";
-    final String VTPLBodilyInjuryLabel = "//div[@data-gb-name=\"top-coverages\"]//div/p[contains(@class, \"detail-key\") and text()=\"VTPL-Bodily Injury\"]";
-    final String VTPLPropertyDamageLabel = "//div[@data-gb-name=\"top-coverages\"]//div/p[contains(@class, \"detail-key\") and text()=\"VTPL-Property Damage\"]";
-    final String ActOfNatureLabel = "//div[@data-gb-name=\"top-coverages\"]//div/p[contains(@class, \"detail-key\") and text()=\"Act of Nature\"]";
-    final String WhenSomeoneInYourCarGetsHurtLabel = "//div[@data-gb-name=\"top-coverages\"]//div/p[contains(@class, \"detail-key\") and text()=\"When someone in your car gets hurt\"]";
+    String TopCoveragesContainer = "//div[@data-gb-name=\"top-coverages\"]";
+    String PolicyPrice = "//div[@class=\"policy-price\"]";
+    String PlanName = "//div[@data-gb-name=\"car-plan\"]//h4[contains(@class,\"name\")]";
+    String OwnDamageAndTheftLabel = "//div[@data-gb-name=\"top-coverages\"]//div/p[contains(@class, \"detail-key\") and text()=\"Own Damage & Theft\"]";
+    String VTPLBodilyInjuryLabel = "//div[@data-gb-name=\"top-coverages\"]//div/p[contains(@class, \"detail-key\") and text()=\"VTPL-Bodily Injury\"]";
+    String VTPLPropertyDamageLabel = "//div[@data-gb-name=\"top-coverages\"]//div/p[contains(@class, \"detail-key\") and text()=\"VTPL-Property Damage\"]";
+    String ActOfNatureLabel = "//div[@data-gb-name=\"top-coverages\"]//div/p[contains(@class, \"detail-key\") and text()=\"Act of Nature\"]";
+    String WhenSomeoneInYourCarGetsHurtLabel = "//div[@data-gb-name=\"top-coverages\"]//div/p[contains(@class, \"detail-key\") and text()=\"When someone in your car gets hurt\"]";
 
     // Elements on Left sidebar
-    final String CarYearSelectedOption_CarDetails = "//div[@data-gb-name=\"car-details\"]//div[@data-gb-name=\"car-year\"]//span[@class=\"filter-option clearfix\"]";
-    final String CarMakeSelectedOption_CarDetails = "//div[@data-gb-name=\"car-details\"]//div[@data-gb-name=\"car-make\"]//span[@class=\"filter-option clearfix\"]";
-    final String CarModelSelectedOption_CarDetails = "//div[@data-gb-name=\"car-details\"]//div[@data-gb-name=\"car-model\"]//span[@class=\"filter-option clearfix\"]";
-    final String CarVariantSelectedOption_CarDetails = "//div[@data-gb-name=\"car-details\"]//div[@data-gb-name=\"car-variant\"]//span[@class=\"filter-option clearfix\"]";
-    final String StillPayingForCarLoanRadio_PlanDetails = "//div[@data-gb-name=\"plan-details\"]//div[@data-gb-name=\"loan-status\"]//label[contains(text(), \"Yes\")]";
-    final String CarUsageRadio_PlanDetails = "//div[@data-gb-name=\"plan-details\"]//div[@data-gb-name=\"car-usage\"]//label[contains(text(), \"PRIVATE\")]";
-    final String CarInsuredForSelectedOption_PlanDetails = "//div[@data-gb-name=\"plan-details\"]//div[@data-gb-name=\"select-insured\"]//span[@class=\"filter-option clearfix\"]";
+    String CarYearSelectedOption_CarDetails = "//div[@data-gb-name=\"car-details\"]//div[@data-gb-name=\"car-year\"]//span[@class=\"filter-option clearfix\"]";
+    String CarMakeSelectedOption_CarDetails = "//div[@data-gb-name=\"car-details\"]//div[@data-gb-name=\"car-make\"]//span[@class=\"filter-option clearfix\"]";
+    String CarModelSelectedOption_CarDetails = "//div[@data-gb-name=\"car-details\"]//div[@data-gb-name=\"car-model\"]//span[@class=\"filter-option clearfix\"]";
+    String CarVariantSelectedOption_CarDetails = "//div[@data-gb-name=\"car-details\"]//div[@data-gb-name=\"car-variant\"]//span[@class=\"filter-option clearfix\"]";
+    String StillPayingForCarLoanRadio_PlanDetails = "//div[@data-gb-name=\"plan-details\"]//div[@data-gb-name=\"loan-status\"]//label[contains(text(), \"Yes\")]";
+    String CarUsageRadio_PlanDetails = "//div[@data-gb-name=\"plan-details\"]//div[@data-gb-name=\"car-usage\"]//label[contains(text(), \"PRIVATE\")]";
+    String CarInsuredForSelectedOption_PlanDetails = "//div[@data-gb-name=\"plan-details\"]//div[@data-gb-name=\"select-insured\"]//span[@class=\"filter-option clearfix\"]";
 
     // Filter Car Usage
-    final String CarUsagePrivate = "//div[@data-gb-name=\"car-usage\"]//input/following-sibling::label[contains(text(), \"PRIVATE\")]";
-    final String CarUsageForHireUberGrab = "//div[@data-gb-name=\"car-usage\"]//input/following-sibling::label[contains(text(), \"ForHire/Uber/Grab\")]";
+    String CarUsagePrivate = "//div[@data-gb-name=\"car-usage\"]//input/following-sibling::label[contains(text(), \"PRIVATE\")]";
+    String CarUsageForHireUberGrab = "//div[@data-gb-name=\"car-usage\"]//input/following-sibling::label[contains(text(), \"ForHire/Uber/Grab\")]";
 
     // Filter Load Status
-    final String LoanStatusYes = "//div[@data-gb-name=\"loan-status\"]//input/following-sibling::label[contains(text(), \"Yes\")]";
-    final String LoanStatusNo = "//div[@data-gb-name=\"loan-status\"]//input/following-sibling::label[contains(text(), \"No\")]";
+    String LoanStatusYes = "//div[@data-gb-name=\"loan-status\"]//input/following-sibling::label[contains(text(), \"Yes\")]";
+    String LoanStatusNo = "//div[@data-gb-name=\"loan-status\"]//input/following-sibling::label[contains(text(), \"No\")]";
 
     // Insured
     String InsuredDropdown = "//div[@data-gb-name=\"select-insured\"]//select";
     // Filters Elements
-    final String cancelButton = "//div[@class=\"popover-navigation\"]/button[text()=\"cancel\"]";
-    final String ClearAllButton = "//a[@data-gb-name=\"filter-reset\" and text()=\"CLEAR ALL\"]";
+    String cancelButton = "//div[@class=\"popover-navigation\"]/button[text()=\"cancel\"]";
+    String ClearAllButton = "//a[@data-gb-name=\"filter-reset\" and text()=\"CLEAR ALL\"]";
 
     // Sort Elements
-    final String PriceLowToHigh = "//div[@class=\"sort-detail sidebar-item\"]//input[@value=\"premium-Asc\"]/following-sibling::label";
-    final String PriceHighToLow = "//div[@class=\"sort-detail sidebar-item\"]//input[@value=\"premium-Desc\"]/following-sibling::label";
-    final String InsurerAZ = "//div[@class=\"sort-detail sidebar-item\"]//input[@value=\"insurerName-Asc\"]/following-sibling::label";
-    final String InsurerZA = "//div[@class=\"sort-detail sidebar-item\"]//input[@value=\"insurerName-Desc\"]/following-sibling::label";
+    String PriceLowToHigh = "//div[@class=\"sort-detail sidebar-item\"]//input[@value=\"premium-Asc\"]/following-sibling::label";
+    String PriceHighToLow = "//div[@class=\"sort-detail sidebar-item\"]//input[@value=\"premium-Desc\"]/following-sibling::label";
+    String InsurerAZ = "//div[@class=\"sort-detail sidebar-item\"]//input[@value=\"insurerName-Asc\"]/following-sibling::label";
+    String InsurerZA = "//div[@class=\"sort-detail sidebar-item\"]//input[@value=\"insurerName-Desc\"]/following-sibling::label";
 
-    final String NoPlansMessage = "//p[text()=\"No plans match your filter criteria…\"]";
+    String NoPlansMessage = "//p[text()=\"No plans match your filter criteria…\"]";
 
-    private final WebDriver driver;
+    private WebDriver driver;
 
     public DetailsPage(WebDriver driver) {
         this.driver = driver;
@@ -399,9 +397,11 @@ public class DetailsPage extends BasePage {
     }
 
     public void dismissPopup() {
-        if (doesElementExist(driver, By.xpath(cancelButton))) {
-            click(driver, By.xpath(cancelButton));
+//        if (doesElementExist(driver, By.xpath(cancelButton))) {
+          try{  click(driver, By.xpath(cancelButton));
             sleep(2);
+        }catch (Exception e){
+              e.printStackTrace();
         }
     }
 
@@ -502,7 +502,7 @@ public class DetailsPage extends BasePage {
         }
 
         for (int i = 0; i < this.getPrices().size(); i++) {
-            Assert.assertEquals("Plan's price does not match",this.getPrices().get(i), prices.get(i));
+            Assert.assertEquals("Plan's price does not match", this.getPrices().get(i), prices.get(i));
         }
     }
 
@@ -524,7 +524,8 @@ public class DetailsPage extends BasePage {
     public void assertFilterCarUsage(String usage, String expectedTotalPlanFound) {
         System.out.println("Filter Car Usage: " + usage);
         filterCarUsage(usage);
-        Assert.assertTrue("Number not match with expected: " + expectedTotalPlanFound, doesResults1Exist(expectedTotalPlanFound));
+        sleep(2);
+        Assert.assertTrue("Car usage number does not match with expected: " + expectedTotalPlanFound, doesResults1Exist(expectedTotalPlanFound));
         filterCarUsage("PRIVATE");
     }
 

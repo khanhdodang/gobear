@@ -14,15 +14,15 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 
 public class Verify_Categories_Filter_Sort_Details {
-    final static Logger logger = Logger.getLogger(FileUtils.class);
+    static Logger logger = Logger.getLogger(FileUtils.class);
     private RemoteWebDriver driver = null;
     SearchProductsPage searchProductsPage;
     DetailsPage detailsPage;
     CarDetails carDetails;
 
     @Parameters({"browser"})
-    @BeforeClass
-    public void SetUp(@Optional("chrome") String browser) {
+    @BeforeMethod
+    public void SetUp(@Optional("firefox") String browser) {
         BasePage setup = new BasePage();
         if (browser.toLowerCase().equals("chrome")) {
             driver = (ChromeDriver) setup.setupDriver(browser);
@@ -57,7 +57,6 @@ public class Verify_Categories_Filter_Sort_Details {
     public void TestCase2() {
         System.out.println("-----------Verify Sort Functions-----------");
         searchProductsPage.searchCarInsurance();
-
         System.out.println("Select Sort Insurer A to Z");
         detailsPage.assertSortOptions(3);
 
@@ -92,7 +91,11 @@ public class Verify_Categories_Filter_Sort_Details {
     }
 
     @AfterTest
-    public void TearDown() {
+    @AfterMethod
+    public void afterMethod() {
+        long id = Thread.currentThread().getId();
+        logger.info("After test. Thread id is: " + id);
         if (driver != null) driver.quit();
     }
+
 }
