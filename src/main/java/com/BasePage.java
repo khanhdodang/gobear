@@ -40,7 +40,7 @@ public class BasePage {
 
         } else if (browser.toLowerCase().equals("firefox")) {
             if (System.getProperty("os.name").contains("Mac")) {
-                System.setProperty("webdriver.gecko.driver", DefaultProfile.MAC_FIREFOX_DRIVER);
+                System.setProperty("webdriver.gecko.driver", BasePage.class.getResource(DefaultProfile.MAC_FIREFOX_DRIVER).getFile());
 
                 // Now checking for existence of Firefox executable.
                 if (!new File("/Applications/Firefox.app/Contents/MacOS/firefox").exists()) {
